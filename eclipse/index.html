@@ -1,0 +1,1659 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; script-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self';"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Michroma&display=swap"
+      rel="stylesheet"
+    />
+    <title>Eclipse</title>
+    <style>
+      /* Apply Michroma to the entire dashboard */
+      *,
+      *::before,
+      *::after {
+        font-family: "Michroma", sans-serif !important;
+        font-weight: 400 !important;
+        font-style: normal !important;
+      }
+
+      :root {
+        --bg: #080d18;
+        --panel: #101827;
+        --panel2: #0c1422;
+        --border: #202d41;
+        --muted: #8291a8;
+        --text: #eef4ff;
+        --cyan: #56d8f5;
+        --blue: #6c8cff;
+        --green: #48dfa0;
+        --amber: #ffca6b;
+        --red: #ff6d83;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: "Michroma", sans-serif !important;
+
+        -webkit-font-smoothing: antialiased;
+        background:
+          radial-gradient(ellipse at 65% -20%, #182b49 0, transparent 45%),
+          var(--bg);
+        color: var(--text);
+        font:
+          14px/1.45 Inter,
+          Segoe UI,
+          Arial,
+          sans-serif;
+        min-height: 100vh;
+      }
+
+      button,
+      input,
+      select {
+        font: inherit;
+      }
+
+      button {
+        cursor: pointer;
+      }
+
+      .app {
+        min-height: 100vh;
+        display: grid;
+        grid-template-columns: 232px minmax(0, 1fr);
+      }
+
+      .sidebar {
+        background: #090f1b;
+        border-right: 1px solid var(--border);
+        padding: 24px 15px;
+        display: flex;
+        flex-direction: column;
+        gap: 27px;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 11px;
+        padding: 0 8px;
+      }
+
+      .brand-icon {
+        width: 38px;
+        height: 38px;
+        border-radius: 12px;
+        background: linear-gradient(145deg, #55e1f5, #5378ff);
+        display: grid;
+        place-items: center;
+        color: #07121f;
+        font-size: 21px;
+        font-weight: 900;
+        box-shadow: 0 8px 25px #4bdcf52b;
+      }
+
+      .brand strong {
+        display: block;
+        font-size: 14px;
+        letter-spacing: 0.2px;
+      }
+
+      .brand small {
+        display: block;
+        color: var(--muted);
+        font-size: 10px;
+        letter-spacing: 1.7px;
+        margin-top: 2px;
+      }
+
+      .nav-label {
+        color: #53647c;
+        font-size: 10px;
+        letter-spacing: 1.8px;
+        padding: 0 12px;
+        margin-bottom: 7px;
+        font-weight: 800;
+      }
+
+      .nav {
+        display: grid;
+        gap: 5px;
+      }
+
+      .nav button {
+        border: 0;
+        color: #8c9bb1;
+        background: transparent;
+        text-align: left;
+        padding: 11px 12px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .nav button span {
+        font-size: 17px;
+        width: 20px;
+        text-align: center;
+      }
+
+      .nav button.active {
+        background: #17263a;
+        color: #dffaff;
+        box-shadow: inset 3px 0 var(--cyan);
+      }
+
+      .nav button:hover:not(.active) {
+        background: #111b2b;
+        color: #e7efff;
+      }
+
+      .side-bottom {
+        margin-top: auto;
+        display: grid;
+        gap: 14px;
+      }
+
+      .device-mini {
+        border: 1px solid var(--border);
+        background: #0e1726;
+        border-radius: 13px;
+        padding: 13px;
+      }
+
+      .device-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-size: 12px;
+        font-weight: 700;
+      }
+
+      .dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: #64748b;
+        display: inline-block;
+        margin-right: 6px;
+      }
+
+      .dot.live {
+        background: var(--green);
+        box-shadow: 0 0 10px #48dfa077;
+      }
+
+      .device-mini p {
+        font-size: 11px;
+        color: var(--muted);
+        margin: 8px 0 0;
+      }
+
+      .side-footer {
+        font-size: 10px;
+        color: #4e6078;
+        padding: 0 9px;
+      }
+
+      main {
+        min-width: 0;
+        padding: 25px 30px 30px;
+        max-width: 1700px;
+        width: 100%;
+        margin: 0 auto;
+      }
+
+      .topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 18px;
+        margin-bottom: 25px;
+      }
+
+      .eyebrow {
+        font-size: 10px;
+        color: var(--cyan);
+        letter-spacing: 2px;
+        font-weight: 800;
+        text-transform: uppercase;
+      }
+
+      h1 {
+        font-size: 25px;
+        letter-spacing: -0.7px;
+        margin: 4px 0 0;
+        font-weight: 750;
+      }
+
+      .subtitle {
+        color: var(--muted);
+        font-size: 12px;
+        margin-top: 5px;
+      }
+
+      .top-actions {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .clock {
+        font-variant-numeric: tabular-nums;
+        color: #9aabc2;
+        font-size: 12px;
+        padding-right: 8px;
+      }
+
+      .btn {
+        border: 1px solid var(--border);
+        border-radius: 9px;
+        padding: 10px 14px;
+        color: #dce8fa;
+        background: #111b2a;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        transition: 0.15s;
+      }
+
+      .btn:hover {
+        border-color: #45607f;
+        background: #17253a;
+      }
+
+      .btn.primary {
+        background: linear-gradient(120deg, #4bd8ef, #6b8bff);
+        border: 0;
+        color: #07111d;
+        font-weight: 800;
+      }
+
+      .btn.primary:hover {
+        filter: brightness(1.08);
+      }
+
+      .btn.danger {
+        color: #ff9eaa;
+        border-color: #5b2937;
+        background: #21121b;
+      }
+
+      .btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+
+      .status-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        border: 1px solid var(--border);
+        background: #101a29;
+        color: #9caec4;
+        padding: 7px 10px;
+        border-radius: 100px;
+        font-size: 11px;
+      }
+
+      .status-pill.connected {
+        border-color: #1d5847;
+        background: #10251f;
+        color: #70edb7;
+      }
+
+      .layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1.55fr) minmax(310px, 0.85fr);
+        gap: 17px;
+        align-items: start;
+      }
+
+      .left-col,
+      .right-col {
+        display: grid;
+        gap: 17px;
+        min-width: 0;
+      }
+
+      .panel {
+        border: 1px solid var(--border);
+        border-radius: 15px;
+        background: linear-gradient(150deg, #111b2b, #0e1725);
+        box-shadow: 0 12px 35px #00000012;
+        overflow: hidden;
+      }
+
+      .panel-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        padding: 17px 19px;
+        border-bottom: 1px solid #1c293b;
+      }
+
+      .panel-title {
+        font-size: 13px;
+        font-weight: 750;
+        letter-spacing: 0.1px;
+      }
+
+      .panel-sub {
+        font-size: 11px;
+        color: var(--muted);
+        margin-top: 3px;
+      }
+
+      .panel-body {
+        padding: 18px 19px;
+      }
+
+      .live-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 220px;
+        gap: 15px;
+        align-items: stretch;
+      }
+
+      .axis-cards {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 10px;
+      }
+
+      .axis-card {
+        background: #0b1421;
+        border: 1px solid #1c2a3d;
+        border-radius: 12px;
+        padding: 13px 12px;
+        min-width: 0;
+      }
+
+      .axis-label {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        color: #a6b5ca;
+        font-size: 11px;
+        font-weight: 700;
+      }
+
+      .axis-color {
+        width: 7px;
+        height: 7px;
+        border-radius: 2px;
+      }
+
+.x { background: #318BFF; }
+.y { background: #B56BFF; }
+.z { background: #FF9F43; }
+      .axis-value {
+        font-size: 27px;
+        letter-spacing: -1px;
+        font-weight: 750;
+        margin: 13px 0 3px;
+        font-variant-numeric: tabular-nums;
+        white-space: nowrap;
+      }
+
+      .axis-value small {
+        font-size: 13px;
+        color: #8293a9;
+        letter-spacing: 0;
+        font-weight: 500;
+      }
+
+      .axis-foot {
+        font-size: 10px;
+        color: #71839b;
+      }
+
+      .meter {
+        height: 4px;
+        background: #1a293b;
+        border-radius: 4px;
+        margin-top: 12px;
+        overflow: hidden;
+      }
+
+      .meter i {
+        display: block;
+        height: 100%;
+        width: 0;
+        background: var(--cyan);
+        border-radius: 4px;
+        transition: width 0.2s;
+      }
+
+      .orientation {
+        background: radial-gradient(
+          circle at 50% 45%,
+          #1a3550 0,
+          #101c2c 45%,
+          #0b1421 75%
+        );
+        border: 1px solid #22344b;
+        border-radius: 12px;
+        min-height: 192px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .orientation:before,
+      .orientation:after {
+        content: "";
+        position: absolute;
+        background: #5a779122;
+      }
+
+      .orientation:before {
+        height: 1px;
+        width: 100%;
+        top: 50%;
+      }
+
+      .orientation:after {
+        width: 1px;
+        height: 100%;
+        left: 50%;
+      }
+
+      .orbit {
+        position: absolute;
+        width: 125px;
+        height: 125px;
+        border: 1px solid #38516c;
+        border-radius: 50%;
+        transform: rotateX(62deg);
+      }
+
+      .orbit.two {
+        transform: rotateY(62deg);
+        width: 135px;
+        height: 135px;
+        border-color: #3f6881;
+      }
+
+      .cube {
+        width: 66px;
+        height: 66px;
+        position: relative;
+        transform-style: preserve-3d;
+        transform: rotateX(-22deg) rotateY(34deg);
+        z-index: 1;
+        transition: transform 0.2s ease;
+      }
+
+      .face {
+        position: absolute;
+        width: 66px;
+        height: 66px;
+        border: 1px solid #7feaff;
+        display: grid;
+        place-items: center;
+        font-size: 10px;
+        font-weight: 800;
+        color: #d9fbff;
+        background: #42cce81b;
+        backdrop-filter: blur(2px);
+      }
+
+      .face.front {
+        transform: translateZ(33px);
+      }
+
+      .face.back {
+        transform: rotateY(180deg) translateZ(33px);
+        background: #6b82ff20;
+        border-color: #8796ff;
+      }
+
+      .face.right {
+        transform: rotateY(90deg) translateZ(33px);
+        background: #55e5a31c;
+        border-color: #60e8b0;
+      }
+
+      .face.left {
+        transform: rotateY(-90deg) translateZ(33px);
+      }
+
+      .face.top {
+        transform: rotateX(90deg) translateZ(33px);
+        background: #6b82ff20;
+        border-color: #8796ff;
+      }
+
+      .face.bottom {
+        transform: rotateX(-90deg) translateZ(33px);
+      }
+
+      .orient-caption {
+        position: absolute;
+        bottom: 10px;
+        left: 0;
+        right: 0;
+        text-align: center;
+        color: #7f94ad;
+        font-size: 10px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+      }
+
+      .chart-wrap {
+        height: 210px;
+        position: relative;
+      }
+
+      .chart-wrap canvas {
+        width: 100%;
+        height: 100%;
+        display: block;
+      }
+
+      .chart-legend {
+        display: flex;
+        gap: 16px;
+        align-items: center;
+        color: #8fa1b8;
+        font-size: 11px;
+      }
+
+      .legend-item {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .legend-dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+      }
+
+      .connection-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+
+      .field {
+        display: grid;
+        gap: 6px;
+      }
+
+      .field label {
+        font-size: 11px;
+        color: #93a5bc;
+        font-weight: 650;
+      }
+
+      .field select,
+      .field input {
+        width: 100%;
+        background: #0a1320;
+        border: 1px solid #27374d;
+        color: #e8f0fd;
+        border-radius: 8px;
+        padding: 10px 11px;
+        outline: none;
+        min-width: 0;
+      }
+
+      .field select:focus,
+      .field input:focus {
+        border-color: #4bcfe9;
+        box-shadow: 0 0 0 3px #4bcfe918;
+      }
+
+      .field select option {
+        background: #0c1523;
+      }
+
+      .connection-actions {
+        display: flex;
+        gap: 9px;
+        margin-top: 14px;
+      }
+
+      .connection-actions .btn {
+        flex: 1;
+      }
+
+      .hint {
+        font-size: 10px;
+        color: #74869e;
+        margin-top: 11px;
+        line-height: 1.5;
+      }
+
+      .quick-stats {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 10px;
+      }
+
+      .stat {
+        background: #0b1421;
+        border: 1px solid #1c2a3d;
+        border-radius: 10px;
+        padding: 12px;
+      }
+
+      .stat label {
+        font-size: 10px;
+        color: #8294ab;
+        display: block;
+      }
+
+      .stat strong {
+        font-size: 19px;
+        display: block;
+        margin-top: 6px;
+        font-variant-numeric: tabular-nums;
+      }
+
+      .stat small {
+        font-size: 10px;
+        color: #71839b;
+      }
+
+      .log-list {
+        display: grid;
+        gap: 10px;
+        max-height: 170px;
+        overflow: auto;
+      }
+
+      .log-row {
+        display: grid;
+        grid-template-columns: 55px 8px 1fr;
+        gap: 9px;
+        align-items: start;
+        font-size: 11px;
+        color: #9aabc0;
+      }
+
+      .log-time {
+        font-variant-numeric: tabular-nums;
+        color: #657a95;
+      }
+
+      .log-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: #4bd9f2;
+        margin-top: 5px;
+      }
+
+      .log-row.warn .log-dot {
+        background: var(--amber);
+      }
+
+      .log-row.error .log-dot {
+        background: var(--red);
+      }
+
+      .log-message {
+        overflow-wrap: anywhere;
+      }
+
+      .empty-log {
+        color: #6f829a;
+        font-size: 11px;
+        padding: 8px 0;
+      }
+
+      .toast {
+        position: fixed;
+        bottom: 20px;
+        right: 24px;
+        max-width: 420px;
+        padding: 12px 16px;
+        background: #17263a;
+        border: 1px solid #38516c;
+        color: #eaf7ff;
+        border-radius: 10px;
+        box-shadow: 0 10px 35px #0007;
+        display: none;
+        z-index: 5;
+        font-size: 12px;
+      }
+
+      .toast.show {
+        display: block;
+      }
+
+      .footer-line {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        color: #536781;
+        font-size: 10px;
+        margin-top: 18px;
+        padding: 0 3px;
+      }
+
+      @media (max-width: 1180px) {
+        .app {
+          grid-template-columns: 200px minmax(0, 1fr);
+        }
+
+        main {
+          padding: 22px 20px;
+        }
+
+        .live-layout {
+          grid-template-columns: 1fr;
+        }
+
+        .orientation {
+          min-height: 170px;
+        }
+
+        .layout {
+          grid-template-columns: minmax(0, 1.2fr) minmax(290px, 0.8fr);
+        }
+      }
+
+      @media (max-width: 920px) {
+        .app {
+          grid-template-columns: 1fr;
+        }
+
+        .sidebar {
+          display: none;
+        }
+
+        main {
+          padding: 18px;
+        }
+
+        .layout {
+          grid-template-columns: 1fr;
+        }
+
+        .right-col {
+          grid-template-columns: 1fr 1fr;
+        }
+
+        .right-col .panel:last-child {
+          grid-column: 1/-1;
+        }
+
+        .topbar {
+          align-items: flex-start;
+        }
+
+        .clock {
+          display: none;
+        }
+      }
+
+      @media (max-width: 600px) {
+        main {
+          padding: 13px;
+        }
+
+        .topbar {
+          display: grid;
+        }
+
+        .top-actions {
+          flex-wrap: wrap;
+        }
+
+        .axis-cards {
+          grid-template-columns: 1fr;
+        }
+
+        .axis-card {
+          display: grid;
+          grid-template-columns: 1fr auto;
+          align-items: center;
+        }
+
+        .axis-value {
+          margin: 0;
+        }
+
+        .axis-foot,
+        .meter {
+          display: none;
+        }
+
+        .right-col {
+          grid-template-columns: 1fr;
+        }
+
+        .right-col .panel:last-child {
+          grid-column: auto;
+        }
+
+        .connection-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .quick-stats {
+          grid-template-columns: 1fr 1fr;
+        }
+
+        .panel-body {
+          padding: 14px;
+        }
+
+        .panel-head {
+          padding: 14px;
+        }
+
+        .chart-wrap {
+          height: 180px;
+        }
+      }
+
+      /* Professional dashboard typography */
+    </style>
+  </head>
+
+  <body>
+    <div class="app">
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="brand-icon">∠</div>
+          <div>
+            <strong>ANGLE<span style="color: var(--cyan)">/</span>LAB</strong
+            ><small>SMART ANALYSER</small>
+          </div>
+        </div>
+        <div>
+          <div class="nav-label">WORKSPACE</div>
+          <nav class="nav">
+            <button class="active" data-view="overview">
+              <span>◫</span> Live dashboard
+            </button>
+            <button data-view="connection">
+              <span>⌁</span> Device connection
+            </button>
+            <button data-view="history"><span>⌁</span> Angle history</button>
+          </nav>
+        </div>
+        <div>
+          <div class="nav-label">TOOLS</div>
+          <nav class="nav">
+            <button id="calibrateNav"><span>⊙</span> Zero / calibrate</button>
+            <button id="exportNav"><span>⇩</span> Export session CSV</button>
+          </nav>
+        </div>
+        <div class="side-bottom">
+          <div class="device-mini">
+            <div class="device-top">
+              <span>Arduino sensor</span><span id="sideDot" class="dot"></span>
+            </div>
+            <p id="sideConnection">Not connected</p>
+            <p id="sidePort">Choose a serial port to begin</p>
+          </div>
+          <div class="side-footer">
+            ANGLE/LAB · DESKTOP EDITION<br />Local sensor processing
+          </div>
+        </div>
+      </aside>
+
+      <main>
+        <header class="topbar">
+          <div>
+            <div class="eyebrow">INSTRUMENT PANEL / 01</div>
+            <h1>Smart Angle Analyser</h1>
+            <div class="subtitle">
+              Real-time 3-axis orientation monitoring and analysis
+            </div>
+          </div>
+          <div class="top-actions">
+            <div class="clock" id="clock">--:--:--</div>
+            <div id="statusPill" class="status-pill">
+              <span class="dot"></span
+              ><span id="statusText">Device disconnected</span>
+            </div>
+            <button class="btn" id="refreshBtn">↻ Refresh ports</button>
+          </div>
+        </header>
+
+        <div class="layout">
+          <section class="left-col">
+            <div class="panel" id="livePanel">
+              <div class="panel-head">
+                <div>
+                  <div class="panel-title">Live orientation</div>
+                  <div class="panel-sub">
+                    Streaming sensor angles · degrees (°)
+                  </div>
+                </div>
+                <span class="status-pill" id="streamPill"
+                  ><span class="dot"></span
+                  ><span id="streamText">Waiting for data</span></span
+                >
+              </div>
+              <div class="panel-body">
+                <div class="live-layout">
+                  <div class="axis-cards">
+                    <div class="axis-card">
+                      <div class="axis-label">
+                        <i class="axis-color x"></i> X · ROLL
+                      </div>
+                      <div class="axis-value" id="angleX">
+                        —<small> °</small>
+                      </div>
+                      <div class="axis-foot" id="deltaX">Awaiting reading</div>
+                      <div class="meter"><i id="meterX"></i></div>
+                    </div>
+                    <div class="axis-card">
+                      <div class="axis-label">
+                        <i class="axis-color y"></i> Y · PITCH
+                      </div>
+                      <div class="axis-value" id="angleY">
+                        —<small> °</small>
+                      </div>
+                      <div class="axis-foot" id="deltaY">Awaiting reading</div>
+                      <div class="meter">
+                        <i id="meterY" style="background: #9a8bff"></i>
+                      </div>
+                    </div>
+                    <div class="axis-card">
+                      <div class="axis-label">
+                        <i class="axis-color z"></i> Z · YAW
+                      </div>
+                      <div class="axis-value" id="angleZ">
+                        —<small> °</small>
+                      </div>
+                      <div class="axis-foot" id="deltaZ">Awaiting reading</div>
+                      <div class="meter">
+                        <i id="meterZ" style="background: #50dfa4"></i>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="orientation">
+                    <div class="orbit"></div>
+                    <div class="orbit two"></div>
+                    <div class="cube" id="cube">
+                      <div class="face front">X+</div>
+                      <div class="face back">X−</div>
+                      <div class="face right">Y+</div>
+                      <div class="face left">Y−</div>
+                      <div class="face top">Z+</div>
+                      <div class="face bottom">Z−</div>
+                    </div>
+                    <div class="orient-caption">
+                      Orientation preview · illustrative
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="panel" id="historyPanel">
+              <div class="panel-head">
+                <div>
+                  <div class="panel-title">Angle timeline</div>
+                  <div class="panel-sub">
+                    Recent readings from all three axes
+                  </div>
+                </div>
+                <div class="chart-legend">
+                  <span class="legend-item"
+                    ><i class="legend-dot" style="background: #318BFF"></i
+                    >X</span
+                  ><span class="legend-item"
+                    ><i class="legend-dot" style="background: #B56BFF"></i
+                    >Y</span
+                  ><span class="legend-item"
+                    ><i class="legend-dot" style="background: #FF9F43"></i
+                    >Z</span
+                  >
+                </div>
+              </div>
+              <div class="panel-body">
+                <div class="chart-wrap">
+                  <canvas id="chart" aria-label="Live angle chart"></canvas>
+                </div>
+              </div>
+            </div>
+
+            <div class="panel">
+              <div class="panel-head">
+                <div>
+                  <div class="panel-title">Session summary</div>
+                  <div class="panel-sub">
+                    Statistics since this dashboard was opened
+                  </div>
+                </div>
+                <button class="btn" id="resetStatsBtn">Reset stats</button>
+              </div>
+              <div class="panel-body">
+                <div class="quick-stats">
+                  <div class="stat">
+                    <label>Readings received</label
+                    ><strong id="readingCount">0</strong
+                    ><small>valid samples</small>
+                  </div>
+                  <div class="stat">
+                    <label>Session duration</label
+                    ><strong id="duration">00:00</strong
+                    ><small>elapsed time</small>
+                  </div>
+                  <div class="stat">
+                    <label>Peak absolute angle</label
+                    ><strong id="peakAngle">—°</strong
+                    ><small id="peakAxis">No readings yet</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="right-col">
+            <div class="panel" id="connectionPanel">
+              <div class="panel-head">
+                <div>
+                  <div class="panel-title">Device connection</div>
+                  <div class="panel-sub">
+                    Connect to your Arduino over USB serial
+                  </div>
+                </div>
+                <span style="font-size: 18px; color: var(--cyan)">⌁</span>
+              </div>
+              <div class="panel-body">
+                <div class="connection-grid">
+                  <div class="field">
+                    <label for="portSelect">Serial port</label
+                    ><select id="portSelect">
+                      <option value="">Loading ports…</option>
+                    </select>
+                  </div>
+                  <div class="field">
+                    <label for="baudRate">Baud rate</label
+                    ><select id="baudRate">
+                      <option>9600</option>
+                      <option>19200</option>
+                      <option>38400</option>
+                      <option selected>115200</option>
+                      <option>230400</option>
+                      <option>460800</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="connection-actions">
+                  <button class="btn primary" id="connectBtn">
+                    ↗ Connect device</button
+                  ><button class="btn danger" id="disconnectBtn" disabled>
+                    Disconnect
+                  </button>
+                </div>
+                <div class="hint">
+                  Expected input per line:
+                  <code style="color: #b5c8e1"
+                    >{"x":12.5,"y":20.3,"z":45.7}</code
+                  ><br />Make sure the Arduino sends one JSON object followed by
+                  a newline.
+                </div>
+              </div>
+            </div>
+
+            <div class="panel">
+              <div class="panel-head">
+                <div>
+                  <div class="panel-title">Analysis controls</div>
+                  <div class="panel-sub">
+                    Tools for the current measurement session
+                  </div>
+                </div>
+              </div>
+              <div class="panel-body">
+                <div class="field">
+                  <label for="sampleWindow">Timeline window</label
+                  ><select id="sampleWindow">
+                    <option value="30">Last 30 samples</option>
+                    <option value="60" selected>Last 60 samples</option>
+                    <option value="120">Last 120 samples</option>
+                    <option value="240">Last 240 samples</option>
+                  </select>
+                </div>
+                <div class="connection-actions" style="margin-top: 12px">
+                  <button class="btn" id="zeroBtn">⊙ Set current as zero</button
+                  ><button class="btn" id="clearBtn">⌫ Clear history</button>
+                </div>
+                <div class="hint" id="zeroHint">
+                  Zero offset: X 0.0° · Y 0.0° · Z 0.0°
+                </div>
+              </div>
+            </div>
+
+            <div class="panel">
+              <div class="panel-head">
+                <div>
+                  <div class="panel-title">System activity</div>
+                  <div class="panel-sub">
+                    Connection events and incoming data status
+                  </div>
+                </div>
+                <button
+                  class="btn"
+                  id="clearLogBtn"
+                  style="padding: 6px 9px; font-size: 10px"
+                >
+                  Clear
+                </button>
+              </div>
+              <div class="panel-body">
+                <div class="log-list" id="logList">
+                  <div class="empty-log">
+                    No activity yet. Connect your Arduino to begin.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+        <div class="footer-line">
+          <span
+            >SMART ANGLE ANALYSER <span style="color: #7186a1">/</span> LOCAL
+            SERIAL SESSION</span
+          ><span id="footerState">Ready · No device connected</span>
+        </div>
+      </main>
+    </div>
+    <div class="toast" id="toast"></div>
+    <script>
+      (() => {
+        const $ = (id) => document.getElementById(id);
+        const state = {
+          connected: false,
+          port: "",
+          readings: [],
+          raw: { x: null, y: null, z: null },
+          zero: { x: 0, y: 0, z: 0 },
+          count: 0,
+          start: Date.now(),
+          peak: 0,
+          peakAxis: "",
+          peakValue: 0,
+          latestTimestamp: null,
+        };
+const colors = {
+  x: "#318BFF",
+  y: "#B56BFF",
+  z: "#FF9F43"
+};        let toastTimer;
+        function toast(message) {
+          const el = $("toast");
+          el.textContent = message;
+          el.classList.add("show");
+          clearTimeout(toastTimer);
+          toastTimer = setTimeout(() => el.classList.remove("show"), 3200);
+        }
+        function timeNow() {
+          return new Date().toLocaleTimeString([], { hour12: false });
+        }
+        function log(message, type = "") {
+          const list = $("logList");
+          if (list.querySelector(".empty-log")) list.innerHTML = "";
+          const row = document.createElement("div");
+          row.className = "log-row " + type;
+          const t = document.createElement("span");
+          t.className = "log-time";
+          t.textContent = timeNow();
+          const dot = document.createElement("i");
+          dot.className = "log-dot";
+          const msg = document.createElement("span");
+          msg.className = "log-message";
+          msg.textContent = message;
+          row.append(t, dot, msg);
+          list.prepend(row);
+          while (list.children.length > 12) list.lastChild.remove();
+        }
+        function setConnected(connected, port = "", baudRate = "") {
+          state.connected = connected;
+          state.port = port || state.port;
+          $("statusPill").classList.toggle("connected", connected);
+          $("statusText").textContent = connected
+            ? "Arduino connected"
+            : "Device disconnected";
+          $("sideDot").classList.toggle("live", connected);
+          $("sideConnection").textContent = connected
+            ? "Connected · " + (baudRate || $("baudRate").value) + " baud"
+            : "Not connected";
+          $("sidePort").textContent = connected
+            ? port || state.port
+            : "Choose a serial port to begin";
+          $("connectBtn").disabled = connected;
+          $("disconnectBtn").disabled = !connected;
+          $("footerState").textContent = connected
+            ? "Live connection · " + (port || state.port)
+            : "Ready · No device connected";
+          $("streamPill").classList.toggle("connected", connected);
+          $("streamText").textContent = connected
+            ? "Connected · waiting for samples"
+            : "Waiting for data";
+        }
+        async function refreshPorts() {
+          if (!window.electronAPI) {
+            $("portSelect").innerHTML =
+              '<option value="">Electron bridge unavailable</option>';
+            log(
+              "electronAPI not found. Check preload.js and contextBridge.",
+              "error",
+            );
+            return;
+          }
+          const select = $("portSelect");
+          const previous = select.value;
+          select.innerHTML = '<option value="">Scanning ports…</option>';
+          try {
+            const ports = await window.electronAPI.getSerialPorts();
+            if (ports && ports.error) throw new Error(ports.error);
+            select.innerHTML = "";
+            if (!ports || !ports.length) {
+              select.innerHTML =
+                '<option value="">No serial ports found</option>';
+              log(
+                "No serial ports found. Check USB cable and Arduino driver.",
+                "warn",
+              );
+              return;
+            }
+            ports.forEach((p) => {
+              const option = document.createElement("option");
+              option.value = p.path;
+              option.textContent =
+                p.path + (p.manufacturer ? " · " + p.manufacturer : "");
+              select.appendChild(option);
+            });
+            if (ports.some((p) => p.path === previous)) select.value = previous;
+            else if (state.port && ports.some((p) => p.path === state.port))
+              select.value = state.port;
+            log(
+              "Found " +
+                ports.length +
+                " serial port" +
+                (ports.length === 1 ? "" : "s") +
+                ".",
+            );
+          } catch (e) {
+            select.innerHTML = '<option value="">Could not list ports</option>';
+            log("Port scan failed: " + e.message, "error");
+            toast("Could not list serial ports");
+          }
+        }
+        async function connect() {
+          const path = $("portSelect").value;
+          const baudRate = Number($("baudRate").value);
+          if (!path) {
+            toast("Select a serial port first.");
+            return;
+          }
+          const btn = $("connectBtn");
+          btn.disabled = true;
+          btn.textContent = "Connecting…";
+          try {
+            const result = await window.electronAPI.connectArduino({
+              path,
+              baudRate,
+            });
+            if (!result || !result.success)
+              throw new Error(result?.message || "Connection failed");
+            state.port = path;
+            setConnected(true, path, baudRate);
+            log("Connected to " + path + " at " + baudRate + " baud.");
+            toast("Arduino connected successfully");
+          } catch (e) {
+            log("Connection failed: " + e.message, "error");
+            toast("Connection failed: " + e.message);
+          } finally {
+            btn.textContent = "↗ Connect device";
+            btn.disabled = state.connected;
+          }
+        }
+        async function disconnect() {
+          try {
+            const result = await window.electronAPI.disconnectArduino();
+            if (result && !result.success)
+              throw new Error(result.message || "Disconnect failed");
+            setConnected(false);
+            log("Arduino disconnected.");
+            toast("Device disconnected");
+          } catch (e) {
+            log("Disconnect failed: " + e.message, "error");
+            toast(e.message);
+          }
+        }
+        function current() {
+          return {
+            x: state.raw.x === null ? null : state.raw.x - state.zero.x,
+            y: state.raw.y === null ? null : state.raw.y - state.zero.y,
+            z: state.raw.z === null ? null : state.raw.z - state.zero.z,
+          };
+        }
+        function fmt(v) {
+          return v === null || !Number.isFinite(v) ? "—" : v.toFixed(1);
+        }
+        function updateReading(data) {
+          if (
+            !data ||
+            ![data.x, data.y, data.z].every((v) => Number.isFinite(Number(v)))
+          )
+            return;
+          state.raw = {
+            x: Number(data.x),
+            y: Number(data.y),
+            z: Number(data.z),
+          };
+          state.latestTimestamp = data.timestamp || Date.now();
+          const v = current();
+          state.count++;
+          state.readings.push({
+            t: state.latestTimestamp,
+            ...v,
+            raw: { ...state.raw },
+          });
+          const limit = Number($("sampleWindow").value);
+          if (state.readings.length > Math.max(500, limit))
+            state.readings.splice(
+              0,
+              state.readings.length - Math.max(500, limit),
+            );
+          $("readingCount").textContent = state.count.toLocaleString();
+          ["x", "y", "z"].forEach((axis) => {
+            const val = v[axis];
+            $("angle" + axis.toUpperCase()).innerHTML =
+              fmt(val) + "<small> °</small>";
+            $("delta" + axis.toUpperCase()).textContent =
+              val === null
+                ? "Awaiting reading"
+                : (val > 0 ? "+" : "") + fmt(val) + "° relative to zero";
+            $("meter" + axis.toUpperCase()).style.width =
+              Math.min(100, (Math.abs(val || 0) / 180) * 100) + "%";
+          });
+          for (const axis of ["x", "y", "z"]) {
+            if (Math.abs(v[axis]) > state.peak) {
+              state.peak = Math.abs(v[axis]);
+              state.peakAxis = axis.toUpperCase();
+              state.peakValue = v[axis];
+            }
+          }
+          $("peakAngle").textContent = state.count
+            ? state.peak.toFixed(1) + "°"
+            : "—°";
+          $("peakAxis").textContent = state.count
+            ? "Axis " +
+              state.peakAxis +
+              " · " +
+              (state.peakValue >= 0 ? "+" : "") +
+              state.peakValue.toFixed(1) +
+              "°"
+            : "No readings yet";
+          $("streamPill").classList.add("connected");
+          $("streamText").textContent = "Receiving live data";
+          $("cube").style.transform =
+            `rotateX(${-22 - v.y}deg) rotateY(${34 + v.x}deg) rotateZ(${v.z}deg)`;
+          drawChart();
+          $("footerState").textContent =
+            "Live data · Last sample " +
+            new Date(state.latestTimestamp).toLocaleTimeString([], {
+              hour12: false,
+            });
+        }
+        function setZero() {
+          if (state.raw.x === null) {
+            toast("Wait for a sensor reading before setting zero.");
+            return;
+          }
+          state.zero = { ...state.raw };
+          $("zeroHint").textContent =
+            `Zero offset: X ${state.zero.x.toFixed(1)}° · Y ${state.zero.y.toFixed(1)}° · Z ${state.zero.z.toFixed(1)}°`;
+          log("Current orientation set as zero reference.");
+          toast("Zero reference updated");
+        }
+        function clearHistory() {
+          state.readings = [];
+          drawChart();
+          log("Timeline history cleared.");
+          toast("Chart history cleared. Session count retained.");
+        }
+        function resetStats() {
+          state.count = 0;
+          state.peak = 0;
+          state.peakAxis = "";
+          state.peakValue = 0;
+          state.start = Date.now();
+          state.readings = [];
+          $("readingCount").textContent = "0";
+          $("peakAngle").textContent = "—°";
+          $("peakAxis").textContent = "No readings yet";
+          $("duration").textContent = "00:00";
+          drawChart();
+          log("Session statistics reset.");
+        }
+        function exportCSV() {
+          if (!state.readings.length) {
+            toast("No readings to export yet.");
+            return;
+          }
+          const rows = [
+            [
+              "timestamp",
+              "x_degrees",
+              "y_degrees",
+              "z_degrees",
+              "raw_x",
+              "raw_y",
+              "raw_z",
+            ],
+            ...state.readings.map((r) => [
+              new Date(r.t).toISOString(),
+              r.x,
+              r.y,
+              r.z,
+              r.raw.x,
+              r.raw.y,
+              r.raw.z,
+            ]),
+          ];
+          const csv = rows
+            .map((r) =>
+              r
+                .map((v) => `"${String(v ?? "").replaceAll('"', '""')}"`)
+                .join(","),
+            )
+            .join("\r\n");
+          const blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement("a");
+          a.href = url;
+          a.download = "smart-angle-session.csv";
+          a.click();
+          URL.revokeObjectURL(url);
+          log("Exported " + state.readings.length + " readings to CSV.");
+          toast("CSV export started");
+        }
+        function drawChart() {
+          const canvas = $("chart");
+          const rect = canvas.getBoundingClientRect();
+          if (!rect.width || !rect.height) return;
+          const dpr = window.devicePixelRatio || 1;
+          canvas.width = Math.round(rect.width * dpr);
+          canvas.height = Math.round(rect.height * dpr);
+          const ctx = canvas.getContext("2d");
+          ctx.scale(dpr, dpr);
+          const w = rect.width,
+            h = rect.height;
+          ctx.clearRect(0, 0, w, h);
+          const pad = { l: 34, r: 8, t: 10, b: 24 };
+          const cw = w - pad.l - pad.r,
+            ch = h - pad.t - pad.b;
+          const limit = Number($("sampleWindow").value);
+          const data = state.readings.slice(-limit);
+          const maxAbs = Math.max(
+            90,
+            ...data.flatMap((d) => [
+              Math.abs(d.x || 0),
+              Math.abs(d.y || 0),
+              Math.abs(d.z || 0),
+            ]),
+          );
+          const range = Math.ceil(maxAbs / 30) * 30;
+          ctx.font = "10px Segoe UI,Arial";
+          ctx.textAlign = "right";
+          ctx.textBaseline = "middle";
+          for (let i = 0; i <= 4; i++) {
+            const val = range - (range * 2 * i) / 4;
+            const y = pad.t + (ch * i) / 4;
+            ctx.strokeStyle = "#243247";
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(pad.l, y);
+            ctx.lineTo(w - pad.r, y);
+            ctx.stroke();
+            ctx.fillStyle = "#71839b";
+            ctx.fillText(Math.round(val) + "°", pad.l - 8, y);
+          }
+          for (let i = 0; i < 5; i++) {
+            const x = pad.l + (cw * i) / 4;
+            ctx.strokeStyle = "#1a293c";
+            ctx.beginPath();
+            ctx.moveTo(x, pad.t);
+            ctx.lineTo(x, pad.t + ch);
+            ctx.stroke();
+          }
+          if (!data.length) {
+            ctx.fillStyle = "#657992";
+            ctx.textAlign = "center";
+            ctx.fillText(
+              "Connect your Arduino to start plotting live readings",
+              pad.l + cw / 2,
+              pad.t + ch / 2,
+            );
+            return;
+          }
+          ["x", "y", "z"].forEach((axis) => {
+            ctx.strokeStyle = colors[axis];
+            ctx.lineWidth = 2;
+            ctx.lineJoin = "round";
+            ctx.lineCap = "round";
+            ctx.beginPath();
+            data.forEach((d, i) => {
+              const x =
+                pad.l + (data.length === 1 ? cw / 2 : (i / (limit - 1)) * cw);
+              const y = pad.t + (ch * (range - (d[axis] || 0))) / (range * 2);
+              if (i === 0) ctx.moveTo(x, y);
+              else ctx.lineTo(x, y);
+            });
+            ctx.stroke();
+            if (data.length === 1) {
+              ctx.fillStyle = colors[axis];
+              ctx.beginPath();
+              ctx.arc(
+                pad.l + cw / 2,
+                pad.t + (ch * (range - (data[0][axis] || 0))) / (range * 2),
+                3,
+                0,
+                Math.PI * 2,
+              );
+              ctx.fill();
+            }
+          });
+          ctx.fillStyle = "#71839b";
+          ctx.textAlign = "left";
+          ctx.textBaseline = "alphabetic";
+          ctx.fillText(data.length + " samples", pad.l, h - 3);
+          ctx.textAlign = "right";
+          ctx.fillText("newest →", w - pad.r, h - 3);
+        }
+        $("connectBtn").addEventListener("click", connect);
+        $("disconnectBtn").addEventListener("click", disconnect);
+        $("refreshBtn").addEventListener("click", refreshPorts);
+        $("zeroBtn").addEventListener("click", setZero);
+        $("calibrateNav").addEventListener("click", setZero);
+        $("clearBtn").addEventListener("click", clearHistory);
+        $("clearLogBtn").addEventListener("click", () => {
+          $("logList").innerHTML =
+            '<div class="empty-log">Activity log cleared.</div>';
+        });
+        $("exportNav").addEventListener("click", exportCSV);
+        $("resetStatsBtn").addEventListener("click", resetStats);
+        $("sampleWindow").addEventListener("change", drawChart);
+        document.querySelectorAll("[data-view]").forEach((btn) =>
+          btn.addEventListener("click", () => {
+            document
+              .querySelectorAll("[data-view]")
+              .forEach((b) => b.classList.toggle("active", b === btn));
+            const target = btn.dataset.view;
+            if (target === "connection")
+              $("connectionPanel").scrollIntoView({
+                behavior: "smooth",
+                block: "center",
+              });
+            else if (target === "history")
+              $("historyPanel").scrollIntoView({
+                behavior: "smooth",
+                block: "center",
+              });
+            else
+              $("livePanel").scrollIntoView({
+                behavior: "smooth",
+                block: "start",
+              });
+          }),
+        );
+        setInterval(() => {
+          $("clock").textContent = timeNow();
+          const secs = Math.max(
+            0,
+            Math.floor((Date.now() - state.start) / 1000),
+          );
+          $("duration").textContent =
+            String(Math.floor(secs / 60)).padStart(2, "0") +
+            ":" +
+            String(secs % 60).padStart(2, "0");
+        }, 1000);
+        window.addEventListener("resize", drawChart);
+        if (window.electronAPI) {
+          window.electronAPI.onAngleData(updateReading);
+          window.electronAPI.onSerialStatus((data) => {
+            if (data.connected) {
+              setConnected(true, data.port, data.baudRate);
+              log("Serial link is open: " + data.port);
+            } else {
+              setConnected(false);
+              log("Serial link closed.", "warn");
+            }
+          });
+          window.electronAPI.onSerialError((data) => {
+            log(data?.message || "Unknown serial error", "error");
+            toast(data?.message || "Serial error");
+          });
+        }
+        setConnected(false);
+        refreshPorts();
+        drawChart();
+      })();
+    </script>
+  </body>
+</html>
